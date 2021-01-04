@@ -1,0 +1,47 @@
+CREATE DATABASE Quiz;
+
+CREATE TABLE Categories
+( id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(30)	
+);
+CREATE TABLE Subcategories
+( id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(30)	
+);
+CREATE TABLE Questions
+( id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(200)	
+);
+CREATE TABLE Answers
+( id INT PRIMARY KEY AUTO_INCREMENT,
+  choice VARCHAR(30),
+  correct_answer BOOLEAN
+);
+CREATE TABLE Questions_Answers 
+(
+    Questions_id INT,
+    Answers_id INT
+);
+
+ALTER TABLE Subcategories
+ADD Cat_id INT;
+ALTER TABLE `Subcategories` ADD CONSTRAINT `Cat_id` FOREIGN KEY (`Cat_id`) REFERENCES `Categories`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+ALTER TABLE Questions
+ADD Subcat_id INT;
+ALTER TABLE `Questions` ADD CONSTRAINT `Subcat_id` FOREIGN KEY (`Subcat_id`) REFERENCES `Subcategories`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE `Answers` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT; 
+
+ALTER TABLE `Questions_Answers` ADD CONSTRAINT `Questions_id` FOREIGN KEY (`Questions_id`) REFERENCES `Questions`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE `Questions_Answers` ADD CONSTRAINT `Answers_id` FOREIGN KEY (`Answers_id`) REFERENCES `Answers`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+INSERT INTO Categories VALUES (id, 'Histoire');
+INSERT INTO Subcategories VALUES (id, 'Les rois de France',1); 
+INSERT INTO Questions VALUES (id, 'Quelle est la couleur du cheval blanc d\'Henri IV ?',5);
+INSERT INTO Answers VALUES (id, 'Vert à poids rouge.',false); 
+INSERT INTO Answers VALUES (id, 'Blanc.',true); 
+INSERT INTO Answers VALUES (id, 'Jaune.',false); 
+INSERT INTO Answers VALUES (id, 'C\'était un zèbre.',false); 
+INSERT INTO `Questions_Answers` VALUES(3,2),(3,3), (3,4), (3,5);
+ 
+ 
